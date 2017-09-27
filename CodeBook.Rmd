@@ -26,5 +26,4 @@ Used the "Human Activity Recognition Using Smartphones Dataset" Version 1.0 avai
 3. Uses descriptive activity names to name the activities in the data set
  `activity_labels.txt` is cbind with mergedData and activity numbers mutated into the labels
 4. Appropriately labels the data set with descriptive variable names.
-  Cleans variable names from symbols like - ()
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
