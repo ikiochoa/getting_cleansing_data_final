@@ -70,7 +70,8 @@ names(newData)
 # 3. Uses descriptive activity names to name the activities 
 #    in the data set
 
-#subject_train and subject_test contain the subject per rows for each dataset
+# subject_train and subject_test contain the subject per rows for each dataset
+# y_test and y_train are labeled activities of the users
 
 testLabels = read.table("./data/UCI HAR Dataset/test/y_test.txt")
 trainLabels = read.table("./data/UCI HAR Dataset/train/y_train.txt")
@@ -94,25 +95,15 @@ newData <- cbind(newData,mergedSubjects)
 dim(newData)
 newData[65:68]
 names(newData)[names(newData) == "V1"] <- "subjects"
-
-#mergedData %>%
-#  select(contains("mean") OR contains("std")) 
-#%>%
-#  gather(part_sex, count, -score_range) %>%
-#  separate(part_sex, c("part", "sex")) %>%
-#  group_by(part,sex) %>%
-#  mutate(total = sum(count),
-#         prop = count/total
-#  ) %>% print
+# Change number of activity into name of activity
+newDataLables <- mutate(newData, activity_labels = activityLabels$V2[activity_labels])
+activityLabels = read.table("./data/UCI HAR Dataset/activity_labels.txt")
 
 # 4. Appropriately labels the data set with descriptive variable names.
 
 # 5. From the data set in step 4, creates a second, independent 
 #    tidy data set with the average of each variable for each 
 #    activity and each subject.
-
-
-
 
 
 # FOR UPLOADING
