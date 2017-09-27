@@ -83,7 +83,7 @@ dim(mergedLabels)
 newData <- cbind(newData,mergedLabels)
 dim(newData)
 newData[65:67]
-names(newData)[names(newData) == "V1"] <- "activity_labels"
+names(newData)[names(newData) == "V1"] <- "activity"
 #Add subjects to table
 testSubjects = read.table("./data/UCI HAR Dataset/test/subject_test.txt")
 trainSubjects = read.table("./data/UCI HAR Dataset/train/subject_train.txt")

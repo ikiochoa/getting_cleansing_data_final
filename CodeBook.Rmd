@@ -1,21 +1,30 @@
----
-title: "Wearables project"
-output: github_document
----
+# Project Codebook
+This codebook describes the variables, data and transformations performed to clean up the data. 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## Variables
+### Measurements
+* `tBodyAccMeanX`
 
-## GitHub Documents
+### Identifiers
+* `subjects`: Nr of person that performed the experiment
+* `activity`: One of the six performed activities, with the following labels:
+** 1 - WALKING
+** 2 - WALKING_UPSTAIRS
+** 3 - WALKING_DOWNSTAIRS
+** 4 - SITTING
+** 5 - STANDING
+** 6 - LAYING
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+## Data
+Used the "Human Activity Recognition Using Smartphones Dataset" Version 1.0 available under https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-## Including Code
-
-You can include R code in the document as follows:
-
-```{r cars}
-summary(cars)
-```
-
+## Transformations
+1. Merges training and test sets to create one dataset.
+ `train/X_train.txt`: Training set. and `test/X_test.txt`: Test set.
+2. Extracts only the measurements on the mean and standard deviation from mergedData.
+ Keeping only variables with "-mean()" or "-st()" inside the name.
+3. Uses descriptive activity names to name the activities in the data set
+ `activity_labels.txt` is cbind with mergedData and activity numbers mutated into the labels
+4. Appropriately labels the data set with descriptive variable names.
+  Cleans variable names from symbols like - ()
+5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
