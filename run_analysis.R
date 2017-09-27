@@ -33,7 +33,7 @@ mergedData[1:3]
 class(mergedData[1])
 
 # 2. Extracts only the measurements on the mean and standard 
-#    deviation for each measurement.
+#    deviation for each measurement.  (DONE)
 # Each row is a 561-feature vector with time and frequency domain variables.
 
 #load tidyr to clean data
@@ -55,15 +55,48 @@ for (i in 1:ncol(mergedData)) {
   names(mergedData)[names(mergedData) == oldname] <- newname
 }
 
+#remove unwanted columns that produce problems (bandsEnergy)
 select(mergedData,-contains("bandsEnergy"))
-
-#remove unwanted columns
 mergedDataA <- mergedData[1:460]
 mergedDataB <- mergedData[503:ncol(mergedData)]
 mergedDataC <- cbind(mergedDataA,mergedDataB)
+mergedDataMean <- select(mergedDataC,contains("-mean()"))
+names(mergedDataMean)
+mergedDataStd <- select(mergedDataC,contains("-std()"))
+names(mergedDataStd)
+newData <- cbind(mergedDataMean,mergedDataStd)
+names(newData)
 
-mergedData %>%
-  select(contains("mean") OR contains("std")) 
+# 3. Uses descriptive activity names to name the activities 
+#    in the data set
+
+#subject_train and subject_test contain the subject per rows for each dataset
+
+testLabels = read.table("./data/UCI HAR Dataset/test/y_test.txt")
+trainLabels = read.table("./data/UCI HAR Dataset/train/y_train.txt")
+mergedLabels = rbind(testLabels,trainLabels)
+dim(testLabels)
+dim(trainLabels)
+dim(mergedLabels)
+#Add activities to table
+newData <- cbind(newData,mergedLabels)
+dim(newData)
+newData[65:67]
+names(newData)[names(newData) == "V1"] <- "activity_labels"
+#Add subjects to table
+testSubjects = read.table("./data/UCI HAR Dataset/test/subject_test.txt")
+trainSubjects = read.table("./data/UCI HAR Dataset/train/subject_train.txt")
+mergedSubjects = rbind(testSubjects,trainSubjects)
+dim(testSubjects)
+dim(trainSubjects)
+dim(mergedSubjects)
+newData <- cbind(newData,mergedSubjects)
+dim(newData)
+newData[65:68]
+names(newData)[names(newData) == "V1"] <- "subjects"
+
+#mergedData %>%
+#  select(contains("mean") OR contains("std")) 
 #%>%
 #  gather(part_sex, count, -score_range) %>%
 #  separate(part_sex, c("part", "sex")) %>%
@@ -71,15 +104,6 @@ mergedData %>%
 #  mutate(total = sum(count),
 #         prop = count/total
 #  ) %>% print
-
-
-
-# get mean and standard deviations
-sapply(mergedData,mean)
-sapply(mergedData,sd)
-
-# 3. Uses descriptive activity names to name the activities 
-#    in the data set
 
 # 4. Appropriately labels the data set with descriptive variable names.
 
